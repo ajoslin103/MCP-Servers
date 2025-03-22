@@ -12,9 +12,13 @@ This project sets up Model Context Protocol (MCP) servers using Docker Compose.
 
 ## Setup
 
-1. Create required data directories:
+1. Create Dockerfile for Inspector:
 ```bash
-mkdir -p data/git data/filesystem data/memory data/postgres data/inspector
+# In docker-files/inspector/Dockerfile
+FROM node:18
+RUN npm install -g @modelcontextprotocol/inspector
+EXPOSE 3000
+CMD ["mcp-inspector", "--host", "0.0.0.0"]
 ```
 
 2. Start the servers:

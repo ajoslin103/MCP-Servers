@@ -6,7 +6,7 @@ services:
     working_dir: /app
     command: sh -c "npm install -g mcp-server-git && mcp-server-git"
     volumes:
-      - ./data/git:/data
+      - ./docker-data/git:/data
     environment:
       - MCP_SERVER_NAME=git
 
@@ -15,7 +15,7 @@ services:
     working_dir: /app
     command: sh -c "npm install -g @modelcontextprotocol/server-filesystem && mcp-server-filesystem /data"
     volumes:
-      - ./data/filesystem:/data
+      - ./docker-data/filesystem:/data
     environment:
       - MCP_SERVER_NAME=filesystem
 
@@ -34,16 +34,16 @@ services:
     working_dir: /app
     command: sh -c "npm install -g @modelcontextprotocol/server-memory && mcp-server-memory"
     volumes:
-      - ./data/memory:/data
+      - ./docker-data/memory:/data
     environment:
       - MCP_SERVER_NAME=memory
 
   inspector:
-    build: ./inspector
+    build: ./docker-files/inspector
     ports:
       - "3000:3000"
     volumes:
-      - ./data/inspector:/data
+      - ./docker-data/inspector:/data
     depends_on:
       - git-server
       - filesystem-server
@@ -55,4 +55,4 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - ./docker-data/postgres:/var/lib/postgresql/data
