@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  git-server:
+    image: node:18
+    working_dir: /app
+    command: sh -c "npm install -g mcp-server-git && mcp-server-git"
+    volumes:
+      - ./data/git:/data
+    environment:
+      - MCP_SERVER_NAME=git
+
+  filesystem-server:
+    image: node:18
+    working_dir: /app
+    command: sh -c "npm install -g @modelcontextprotocol/server-filesystem && mcp-server-filesystem /data"
+    volumes:
+      - ./data/filesystem:/data
+    environment:
+      - MCP_SERVER_NAME=filesystem
+
+  postgres-server:
+    image: node:18
+    working_dir: /app
+    command: sh -c "npm install -g @modelcontextprotocol/server-postgres && mcp-server-postgres postgres://postgres:postgres@postgres:5432/postgres"
+    depends_on:
+      - postgres
+    environment:
+      - MCP_SERVER_NAME=postgres
+      - POSTGRES_CONNECTION_STRING=postgres://postgres:postgres@postgres:5432/postgres
+
+  memory-server:
+    image: node:18
+    working_dir: /app
+    command: sh -c "npm install -g @modelcontextprotocol/server-memory && mcp-server-memory"
+    volumes:
+      - ./data/memory:/data
+    environment:
+      - MCP_SERVER_NAME=memory
+
+  inspector:
+    build: ./inspector
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data/inspector:/data
+    depends_on:
+      - git-server
+      - filesystem-server
+      - postgres-server
+      - memory-server
+
+  postgres:
+    image: postgres:14
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data

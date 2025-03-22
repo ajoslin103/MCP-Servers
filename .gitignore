@@ -1,0 +1,15 @@
+
+docker-data/filesystem/*
+!docker-data/filesystem/.keep
+
+docker-data/git/*
+!docker-data/git/.keep
+
+docker-data/inspector/*
+!docker-data/inspector/.keep
+
+docker-data/memory/*
+!docker-data/memory/.keep
+
+docker-data/postgres/*
+!docker-data/postgres/.keep
