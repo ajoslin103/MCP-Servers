@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   git-server:
     image: node:18
@@ -37,18 +35,6 @@ services:
       - ./docker-data/memory:/data
     environment:
       - MCP_SERVER_NAME=memory
-
-  inspector:
-    build: ./docker-files/inspector
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./docker-data/inspector:/data
-    depends_on:
-      - git-server
-      - filesystem-server
-      - postgres-server
-      - memory-server
 
   postgres:
     image: postgres:14
