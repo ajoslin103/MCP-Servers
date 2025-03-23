@@ -48,6 +48,7 @@ docker compose down
   - `init-repo.sh` - Initialize the repository with correct Node.js and packages
   - `start-inspector.sh` - Start the MCP Inspector in background
   - `stop-inspector.sh` - Stop the MCP Inspector
+  - templates:
   - `template-start-mcp-server.sh` - Template for creating start scripts for MCP servers
   - `template-stop-mcp-server.sh` - Template for creating stop scripts for MCP servers
 
